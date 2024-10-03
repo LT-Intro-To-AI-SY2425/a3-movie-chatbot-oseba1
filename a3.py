@@ -21,6 +21,7 @@
 from movies import movie_db
 from match import match
 from typing import List, Tuple, Callable, Any
+import itertools
 
 # The projection functions, that give us access to certain parts of a "movie" (a tuple)
 def get_title(movie: Tuple[str, str, int, List[str]]) -> str:
@@ -54,7 +55,15 @@ def title_by_year(matches: List[str]) -> List[str]:
     Returns:
         a list of movie titles made in the passed in year
     """
-    pass
+
+    year = int(matches[0])
+    result = []
+    for movie in movie_db:
+        if get_year(movie) == year:
+            result.append(get_title(movie))
+    
+    return result
+
 
 
 def title_by_year_range(matches: List[str]) -> List[str]:
@@ -70,7 +79,16 @@ def title_by_year_range(matches: List[str]) -> List[str]:
         a list of movie titles made during those years, inclusive (meaning if you pass
         in ["1991", "1994"] you will get movies made in 1991, 1992, 1993 & 1994)
     """
-    pass
+
+    matches = [eval(i) for i in matches]
+    result = []
+    for year in range(matches[0], matches[1] + 1):
+        moiveTitle = title_by_year([str(year)])
+        result.append(moiveTitle)
+
+
+    result = list(itertools.chain.from_iterable(result))
+    return result
 
 
 def title_before_year(matches: List[str]) -> List[str]:
