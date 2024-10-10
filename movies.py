@@ -435,4 +435,31 @@ movie_db: List[Tuple[str, str, int, List[str]]] = [
             "spike lee",
         ],
     ),
+    # custom stuff
+    (
+        "boys in the boat",
+        "george clooney",
+        2023,
+        [
+            "callum turner",
+            "joel edgerton",
+            "jack mulhern",
+            "hadley robinson",
+            "courtney henggeler",
+            "peter guinness",
+        ],
+    ),
+    (
+        "the batman",
+        "matt reeves",
+        2022,
+        [
+            "robert pattinson",
+            "zoë kravitz",
+            "paul dano",
+            "colin farrell",
+            "jeffrey wright",
+            "andy serkis",
+        ],
+    ),
 ]

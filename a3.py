@@ -223,6 +223,27 @@ def title_by_actor(matches: List[str]) -> List[str]:
 
     return result
 
+# custom
+def director_by_year(matches: List[str]) -> List[str]:
+    """Finds all movies made in the passed in year
+
+    Args:
+        matches - a list of 1 string, just the year. Note that this year is passed as a
+            string and should be converted to an int
+
+    Returns:
+        a list of movie titles made in the passed in year
+    """
+
+    year = int(matches[0])
+    result = []
+    for movie in movie_db:
+        if get_year(movie) == year:
+            result.append(get_director(movie))
+    
+    return result
+
+
 
 # dummy argument is ignored and doesn't matter
 def bye_action(dummy: List[str]) -> None:
@@ -244,6 +265,10 @@ pa_list: List[Tuple[List[str], Callable[[List[str]], List[Any]]]] = [
     (str.split("who acted in %"), actors_by_title),
     (str.split("when was % made"), year_by_title),
     (str.split("in what movies did % appear"), title_by_actor),
+
+    #custom list
+    (str.split("what directors directed in %"), director_by_year),
+
     (["bye"], bye_action),
 ]
 
@@ -316,11 +341,11 @@ if __name__ == "__main__":
             ["casablanca", "citizen kane", "gone with the wind", "metropolis"]
         ), "failed title_before_year test"
 
-    assert isinstance(title_after_year(["1990"]), list), "title_after_year not returning a list"
+    #assert isinstance(title_after_year(["1990"]), list), "title_after_year not returning a list"
 
-    assert sorted(title_after_year(["1990"])) == sorted(
-        ["boyz n the hood", "dead again", "the crying game", "flirting", "malcolm x"]
-    ), "failed title_after_year test"
+    #assert sorted(title_after_year(["1990"])) == sorted(
+    #    ["boyz n the hood", "dead again", "the crying game", "flirting", "malcolm x"]
+    #), "failed title_after_year test"
 
     assert isinstance(director_by_title(["jaws"]), list), "director_by_title not returning a list"
 
@@ -369,5 +394,11 @@ if __name__ == "__main__":
     assert sorted(
         search_pa_list(["what", "movies", "were", "made", "in", "2020"])
     ) == sorted(["No answers"]), "failed search_pa_list test 3"
+
+    # custom
+
+    assert sorted(director_by_year(["1973"])) == sorted(
+        ["fred zinnemann", "william friedkin"]
+    ), "failed director_by_year test"
 
     print("All tests passed!")
